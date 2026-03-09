@@ -5,8 +5,11 @@ import classNames from "classnames";
 const Month = () => {
     //控制弹框打开和关闭
     const [dataVisible, setDataVisible] = useState(false)
-    const onConfirm = () => {
+    //时间显示
+    const [currentDate, setCurrentDate] = useState(new Date())
+    const onConfirm = (data) => {
         setDataVisible(false)
+        setCurrentDate(data)
     }
     return (
         <div className="monthlyBill">
@@ -18,7 +21,7 @@ const Month = () => {
                     {/* 时间切换区域 */}
                     <div className="date" onClick={()=>{setDataVisible(true)}}>
                         <span className="text">
-                            2023 | 3月账单
+                            {currentDate.getFullYear()} | {currentDate.getMonth()+1}月账单
                         </span>
                         {/* 思路：根据当前弹框打开的状态控制expand类名是否存在 */}
                         <span className={classNames('arrow',dataVisible && 'expand')}></span>
