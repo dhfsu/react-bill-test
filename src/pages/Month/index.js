@@ -1,6 +1,6 @@
 import { NavBar, DatePicker } from "antd-mobile";
 import './index.scss'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
 import { useMemo } from "react";
@@ -26,6 +26,13 @@ const Month = () => {
 
         return { pay, income, total: income + pay }
     },[currentMonthList])
+
+    useEffect(() => {
+        const newDate = dayjs().format('YYYY-MM')
+        //边界值控制
+        if(monthGroup[newDate])
+        {setcurrentMonthList(monthGroup[newDate]) }
+    },[monthGroup])
     //确认回调
     const onConfirm = (data) => {
         setDataVisible(false)
