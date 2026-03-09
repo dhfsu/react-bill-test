@@ -1,25 +1,61 @@
-import { Button } from "antd-mobile";
-import { useEffect } from "react";
-import { Outlet } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { getBillList } from "@/store/modules/billStore";
+import { TabBar } from 'antd-mobile'
+import { useDispatch } from 'react-redux'
+import { Outlet} from 'react-router-dom'
+import { useNavigate } from'react-router-dom'
+import {
+    BillOutline,
+    CalculatorOutline,
+    AddCircleOutline
+} from 'antd-mobile-icons'
+import './index.scss'
+import { useEffect } from 'react'
+import { getBillList } from '@/store/modules/billStore'
+
+const tabs = [
+    {
+        key: '/month',
+        title: '月度账单',
+        icon: <BillOutline />,
+    },
+    {
+        key: '/new',
+        title: '记账',
+        icon: <AddCircleOutline />,
+    },
+    {
+        key: '/year',
+        title: '年度账单',
+        icon: <CalculatorOutline />,
+    },
+]
+
 const Layout = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getBillList())
     }, [dispatch])
+
+    const navigate = useNavigate()
+    const switchRoute = (path) => {
+        // console.log(path)
+        navigate(path)
+    }
     return (
-        <div>
-            这是一级Layout路由
-            {/* 二级路由出口，不设置的话二级路由无法显示 */}
-            <Outlet />
-            {/* 测试全局生效按钮 */}
-            <Button color="primary">测试全局</Button>
-            <div className="purple">
-                {/* 测试局部生效按钮 */}
-                <Button color="primary">测试全局</Button>
+        <div className="layout">
+            <div className="container">
+                {/* 二级路由出口 */}
+                <Outlet />
+            </div>
+
+            <div className='footer'>
+                <TabBar onChange={switchRoute}>
+                    {tabs.map(item => (
+                        <TabBar.Item key={item.key} icon={item.icon} title={item.title} />
+                    ))}
+                </TabBar>
             </div>
         </div>
     )
 }
-export default Layout;
+
+export default Layout
