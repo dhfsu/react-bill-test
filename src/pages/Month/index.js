@@ -6,14 +6,18 @@ import { useSelector } from "react-redux";
 import { useMemo } from "react";
 import _ from "lodash";
 import dayjs from "dayjs";
+import DailyBill from "./components/DayBill"
+
 
 const Month = () => {
     //获取redux中存储的账单数据
     const billList = useSelector(state => state.bill.billList)
+    //根据账单数据生成月度数据
     const monthGroup = useMemo(() => {
         return _.groupBy(billList, (item) => dayjs(item.date).format('YYYY-MM'))
     }, [billList])
-    console.log(monthGroup);
+
+    // console.log(monthGroup);
     //根据账单数据生成日历数据
     //控制弹框打开和关闭
     const [dataVisible, setDataVisible] = useState(false)
@@ -40,6 +44,14 @@ const Month = () => {
         setcurrentMonthList(monthGroup[formatDate])
         setCurrentDate(formatDate)
     }
+
+    //当前月按照日来分组
+    const dayGroup = useMemo(() => {
+        const groupData = _.groupBy(currentMonthList, (item) => dayjs(item.date).format('YYYY-MM-DD'))
+        const keys = Object.keys(groupData)
+        return {groupData, keys}
+    }, [currentMonthList])
+
     return (
         <div className="monthlyBill">
             <NavBar className="nav" backArrow={false}>
@@ -83,11 +95,11 @@ const Month = () => {
                     />
                 </div>
                 {/* 单日列表统计 */}
-                {/* {
+                {
                     dayGroup.keys.map(key => {
                         return <DailyBill key={key} date={key} billList={dayGroup.groupData[key]} />
                     })
-                } */}
+                }
             </div>
         </div >
     )
