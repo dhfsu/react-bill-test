@@ -125,6 +125,20 @@
       "money": -100,
       "date": "2026-03-11T02:26:46.386Z",
       "useFor": "audio"
+    },
+    {
+      "id": "db99",
+      "type": "pay",
+      "money": -100,
+      "date": "2026-03-11T03:07:08.168Z",
+      "useFor": "food"
+    },
+    {
+      "id": "4bf8",
+      "type": "income",
+      "money": 10000,
+      "date": "2026-03-11T03:23:10.166Z",
+      "useFor": "salary"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
